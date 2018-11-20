@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="Account1" class="com.capgemini.beans.Account">
+		<property name="accountNumber" value="1234" />
+		<property name="name" value="name1" />
+		<property name="amount" value="1000" />
+	</bean>
+
+	<bean id="Account2" class="com.capgemini.beans.Account">
+		<property name="accountNumber" value="2345" />
+		<property name="name" value="name2" />
+		<property name="amount" value="2000" />
+	</bean>
+
+	<bean id="Account3" class="com.capgemini.beans.Account">
+		<property name="accountNumber" value="3456" />
+		<property name="name" value="name3" />
+		<property name="amount" value="7000" />
+	</bean>
+
+	<bean id="accountMap" class="com.capgemini.beans.Account">
+		<property name="accounts">
+			<map key-type="java.lang.String"
+				value-type="com.capgemini.beans.Account">
+				<entry key="1" value-ref="Account1" />
+				<entry key="2" value-ref="Account2" />
+				<entry key="3" value-ref="Account3" />
+			</map>
+		</property>
+	</bean>
+
+
+</beans>
