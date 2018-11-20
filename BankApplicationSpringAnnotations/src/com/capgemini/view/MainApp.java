@@ -1,12 +1,14 @@
 package com.capgemini.view;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.capgemini.beans.Account;
 import com.capgemini.configuration.BeanDataConfig;
-import com.capgemini.configuration.BeanServiceConfig;
+import com.capgemini.exceptions.InsufficientBalanceException;
 import com.capgemini.exceptions.InsufficientOpeningBalanceException;
 import com.capgemini.exceptions.InvalidAccountNumberException;
+import com.capgemini.service.Service1;
 import com.capgemini.service.ServiceImpl;
 
 public class MainApp {
@@ -16,16 +18,18 @@ public class MainApp {
 		Account b = null;
 		Account b1 = null;
 		Account b2 = null;
+		
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(BeanDataConfig.class);
-
 		Account accounts = ctx.getBean(Account.class);
-
-		AnnotationConfigApplicationContext ctx2 = new AnnotationConfigApplicationContext(BeanServiceConfig.class);
-
-		ServiceImpl s = ctx2.getBean(ServiceImpl.class);
+		
+		ApplicationContext context = new AnnotationConfigApplicationContext();
+		((AnnotationConfigApplicationContext) context).scan("com.capgemini");
+		((AnnotationConfigApplicationContext) context).refresh();
+		Service1 s = context.getBean(ServiceImpl.class);
 		Account a = accounts.getAccounts().get("1");
 		Account a1 = accounts.getAccounts().get("2");
 		Account a2 = accounts.getAccounts().get("3");
+	
 
 		try {
 			b = s.createAccount(a.getAccountNumber(), a.getName(), a.getAmount());
@@ -51,31 +55,31 @@ public class MainApp {
 
 		// Fundtransfer test
 
-//		try {
-//			Account aTransfer = s.fundTransfer(b1.getAccountNumber(),20);
-//			if(aTransfer != null) {
-//				System.out.println(aTransfer.getAccountNumber());
-//				System.out.println(aTransfer.getAmount());
-//				System.out.println(aTransfer.getName());
-//			}
-//		} catch (InvalidAccountNumberException | InsufficientBalanceException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			Account aTransfer = s.fundTransfer(b1.getAccountNumber(),20);
+			if(aTransfer != null) {
+				System.out.println(aTransfer.getAccountNumber());
+				System.out.println(aTransfer.getAmount());
+				System.out.println(aTransfer.getName());
+			}
+		} catch (InvalidAccountNumberException | InsufficientBalanceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// Withdraw test
 
-//		try {
-//			Account aWithdraw = s.withdrawAmount(1234, 30);
-//			if(aWithdraw != null) {
-//				System.out.println(aWithdraw.getAccountNumber());
-//				System.out.println(aWithdraw.getAmount());
-//				System.out.println(aWithdraw.getName());
-//			}
-//		} catch (InvalidAccountNumberException | InsufficientBalanceException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			Account aWithdraw = s.withdrawAmount(1234, 30);
+			if(aWithdraw != null) {
+				System.out.println(aWithdraw.getAccountNumber());
+				System.out.println(aWithdraw.getAmount());
+				System.out.println(aWithdraw.getName());
+			}
+		} catch (InvalidAccountNumberException | InsufficientBalanceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

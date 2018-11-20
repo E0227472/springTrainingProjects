@@ -1,21 +1,27 @@
 package com.capgemini.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.capgemini.beans.Account;
 import com.capgemini.exceptions.InsufficientBalanceException;
 import com.capgemini.exceptions.InsufficientOpeningBalanceException;
 import com.capgemini.exceptions.InvalidAccountNumberException;
-import com.capgemini.repository.Repository;
+import com.capgemini.repository.Repository1;
 import com.capgemini.repository.RepositoryImpl;
 
-public class ServiceImpl implements Service {
 
-	private Repository r;
+@Service
+public class ServiceImpl implements Service1 {
+	
+	@Autowired
+	private Repository1 r;
 
 	public ServiceImpl() {
 		r = new RepositoryImpl();
 	}
 
-	public ServiceImpl(Repository r) {
+	public ServiceImpl(Repository1 r) {
 		this.r = r;
 	}
 	public Account createAccount(int accountNumber, String name, int amount)
